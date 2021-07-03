@@ -6,7 +6,7 @@ const CreatureAccessory = artifacts.require(
 
 
 contract("CreatureAccessory", (accounts) => {
-  const URI_BASE = 'https://creatures-api.opensea.io';
+  const URI_BASE = 'https://nft-collectibles-api.herokuapp.com';
   const CONTRACT_URI = `${URI_BASE}/contract/opensea-erc1155`;
   let creatureAccessory;
 
