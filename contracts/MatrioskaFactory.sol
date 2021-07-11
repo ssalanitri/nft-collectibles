@@ -5,10 +5,10 @@ pragma solidity ^0.8.0;
 import "openzeppelin-solidity/contracts/access/Ownable.sol";
 import "openzeppelin-solidity/contracts/utils/Strings.sol";
 import "./IFactoryERC721.sol";
-import "./Creature.sol";
-import "./CreatureLootBox.sol";
+import "./Matrioska.sol";
+import "./MatrioskaLootBox.sol";
 
-contract CreatureFactory is FactoryERC721, Ownable {
+contract MatrioskaFactory is FactoryERC721, Ownable {
     using Strings for string;
 
     event Transfer(
@@ -20,34 +20,34 @@ contract CreatureFactory is FactoryERC721, Ownable {
     address public proxyRegistryAddress;
     address public nftAddress;
     address public lootBoxNftAddress;
-    string public baseURI = "https://nft-collectibles-api.herokuapp.com/api/factory/";
+    string public baseURI = "https://Matrioskas-api.opensea.io/api/factory/";
 
     /*
-     * Enforce the existence of only 100 OpenSea creatures.
+     * Enforce the existence of only 100 OpenSea Matrioskas.
      */
-    uint256 CREATURE_SUPPLY = 100;
+    uint256 Matrioska_SUPPLY = 100;
 
     /*
-     * Three different options for minting Creatures (basic, premium, and gold).
+     * Three different options for minting Matrioskas (basic, premium, and gold).
      */
     uint256 NUM_OPTIONS = 3;
-    uint256 SINGLE_CREATURE_OPTION = 0;
-    uint256 MULTIPLE_CREATURE_OPTION = 1;
+    uint256 SINGLE_Matrioska_OPTION = 0;
+    uint256 MULTIPLE_Matrioska_OPTION = 1;
     uint256 LOOTBOX_OPTION = 2;
-    uint256 NUM_CREATURES_IN_MULTIPLE_CREATURE_OPTION = 4;
+    uint256 NUM_MatrioskaS_IN_MULTIPLE_Matrioska_OPTION = 4;
 
     constructor(address _proxyRegistryAddress, address _nftAddress) {
         proxyRegistryAddress = _proxyRegistryAddress;
         nftAddress = _nftAddress;
         lootBoxNftAddress = address(
-            new CreatureLootBox(_proxyRegistryAddress, address(this))
+            new MatrioskaLootBox(_proxyRegistryAddress, address(this))
         );
 
         fireTransferEvents(address(0), owner());
     }
 
     function name() override external pure returns (string memory) {
-        return "OpenSeaCreature Item Sale";
+        return "OpenSeaMatrioska Item Sale";
     }
 
     function symbol() override external pure returns (string memory) {
@@ -84,22 +84,22 @@ contract CreatureFactory is FactoryERC721, Ownable {
         );
         require(canMint(_optionId));
 
-        Creature openSeaCreature = Creature(nftAddress);
-        if (_optionId == SINGLE_CREATURE_OPTION) {
-            openSeaCreature.mintTo(_toAddress);
-        } else if (_optionId == MULTIPLE_CREATURE_OPTION) {
+        Matrioska openSeaMatrioska = Matrioska(nftAddress);
+        if (_optionId == SINGLE_Matrioska_OPTION) {
+            openSeaMatrioska.mintTo(_toAddress);
+        } else if (_optionId == MULTIPLE_Matrioska_OPTION) {
             for (
                 uint256 i = 0;
-                i < NUM_CREATURES_IN_MULTIPLE_CREATURE_OPTION;
+                i < NUM_MatrioskaS_IN_MULTIPLE_Matrioska_OPTION;
                 i++
             ) {
-                openSeaCreature.mintTo(_toAddress);
+                openSeaMatrioska.mintTo(_toAddress);
             }
         } else if (_optionId == LOOTBOX_OPTION) {
-            CreatureLootBox openSeaCreatureLootBox = CreatureLootBox(
+            MatrioskaLootBox openSeaMatrioskaLootBox = MatrioskaLootBox(
                 lootBoxNftAddress
             );
-            openSeaCreatureLootBox.mintTo(_toAddress);
+            openSeaMatrioskaLootBox.mintTo(_toAddress);
         }
     }
 
@@ -108,21 +108,21 @@ contract CreatureFactory is FactoryERC721, Ownable {
             return false;
         }
 
-        Creature openSeaCreature = Creature(nftAddress);
-        uint256 creatureSupply = openSeaCreature.totalSupply();
+        Matrioska openSeaMatrioska = Matrioska(nftAddress);
+        uint256 MatrioskaSupply = openSeaMatrioska.totalSupply();
 
         uint256 numItemsAllocated = 0;
-        if (_optionId == SINGLE_CREATURE_OPTION) {
+        if (_optionId == SINGLE_Matrioska_OPTION) {
             numItemsAllocated = 1;
-        } else if (_optionId == MULTIPLE_CREATURE_OPTION) {
-            numItemsAllocated = NUM_CREATURES_IN_MULTIPLE_CREATURE_OPTION;
+        } else if (_optionId == MULTIPLE_Matrioska_OPTION) {
+            numItemsAllocated = NUM_MatrioskaS_IN_MULTIPLE_Matrioska_OPTION;
         } else if (_optionId == LOOTBOX_OPTION) {
-            CreatureLootBox openSeaCreatureLootBox = CreatureLootBox(
+            MatrioskaLootBox openSeaMatrioskaLootBox = MatrioskaLootBox(
                 lootBoxNftAddress
             );
-            numItemsAllocated = openSeaCreatureLootBox.itemsPerLootbox();
+            numItemsAllocated = openSeaMatrioskaLootBox.itemsPerLootbox();
         }
-        return creatureSupply < (CREATURE_SUPPLY - numItemsAllocated);
+        return MatrioskaSupply < (Matrioska_SUPPLY - numItemsAllocated);
     }
 
     function tokenURI(uint256 _optionId) override external view returns (string memory) {

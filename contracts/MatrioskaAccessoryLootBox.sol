@@ -9,11 +9,11 @@ import "./LootBoxRandomness.sol";
 
 
 /**
- * @title CreatureAccessoryLootBox
- * CreatureAccessoryLootBox - a randomized and openable lootbox of Creature
+ * @title MatrioskaAccessoryLootBox
+ * MatrioskaAccessoryLootBox - a randomized and openable lootbox of Matrioska
  * Accessories.
  */
-contract CreatureAccessoryLootBox is ERC1155Tradable, ReentrancyGuard {
+contract MatrioskaAccessoryLootBox is ERC1155Tradable, ReentrancyGuard {
   using LootBoxRandomness for LootBoxRandomness.LootBoxRandomnessState;
   using SafeMath for uint256;
 
@@ -27,7 +27,7 @@ contract CreatureAccessoryLootBox is ERC1155Tradable, ReentrancyGuard {
    */
   constructor(address _proxyRegistryAddress)
   ERC1155Tradable(
-    "OpenSea Creature Accessory Loot Box",
+    "OpenSea Matrioska Accessory Loot Box",
     "OSCALOOT",
     "",
     _proxyRegistryAddress

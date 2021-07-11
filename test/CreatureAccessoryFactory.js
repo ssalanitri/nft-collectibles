@@ -87,7 +87,7 @@ contract("CreatureAccessoryFactory", (accounts) => {
     it('should return the correct name', async () => {
       assert.equal(
         await myFactory.name(),
-        'OpenSea Creature Accessory Pre-Sale'
+        'OpenSea Matrioska Accessory Pre-Sale'
       );
     });
   });

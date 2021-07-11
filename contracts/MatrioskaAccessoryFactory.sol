@@ -9,11 +9,11 @@ import "./IFactoryERC1155.sol";
 import "./ERC1155Tradable.sol";
 
 /**
- * @title CreatureAccessoryFactory
- * CreatureAccessory - a factory contract for Creature Accessory semi-fungible
+ * @title MatrioskaAccessoryFactory
+ * MatrioskaAccessory - a factory contract for Matrioska Accessory semi-fungible
  * tokens.
  */
-contract CreatureAccessoryFactory is FactoryERC1155, Ownable, ReentrancyGuard {
+contract MatrioskaAccessoryFactory is FactoryERC1155, Ownable, ReentrancyGuard {
     using Strings for string;
     using SafeMath for uint256;
 
@@ -21,7 +21,7 @@ contract CreatureAccessoryFactory is FactoryERC1155, Ownable, ReentrancyGuard {
     address public nftAddress;
     address public lootBoxAddress;
     string
-        internal constant baseMetadataURI = "https://nft-collectibles-api.herokuapp.com/api/";
+        internal constant baseMetadataURI = "https://Matrioskas-api.opensea.io/api/";
     uint256 constant UINT256_MAX = ~uint256(0);
 
     /*
@@ -30,11 +30,11 @@ contract CreatureAccessoryFactory is FactoryERC1155, Ownable, ReentrancyGuard {
      */
     uint256 constant SUPPLY_PER_TOKEN_ID = UINT256_MAX;
 
-    // The number of creature accessories (not creature accessory rarity classes!)
+    // The number of matrioska accessories (not matrioska accessory rarity classes!)
     uint256 constant NUM_ITEM_OPTIONS = 6;
 
     /*
-     * Three different options for minting CreatureAccessories (basic, premium, and gold).
+     * Three different options for minting MatrioskaAccessories (basic, premium, and gold).
      */
     uint256 public constant BASIC_LOOTBOX = NUM_ITEM_OPTIONS + 0;
     uint256 public constant PREMIUM_LOOTBOX = NUM_ITEM_OPTIONS + 1;
@@ -59,7 +59,7 @@ contract CreatureAccessoryFactory is FactoryERC1155, Ownable, ReentrancyGuard {
     /////
 
     function name() override external pure returns (string memory) {
-        return "OpenSea Creature Accessory Pre-Sale";
+        return "OpenSea Matrioska Accessory Pre-Sale";
     }
 
     function symbol() override external pure returns (string memory) {
@@ -118,7 +118,7 @@ contract CreatureAccessoryFactory is FactoryERC1155, Ownable, ReentrancyGuard {
     ) internal {
         require(
             _canMint(_msgSender(), _option, _amount),
-            "CreatureAccessoryFactory#_mint: CANNOT_MINT_MORE"
+            "MatrioskaAccessoryFactory#_mint: CANNOT_MINT_MORE"
         );
         if (_option < NUM_ITEM_OPTIONS) {
             require(
