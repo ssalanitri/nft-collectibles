@@ -20,21 +20,21 @@ contract MatrioskaFactory is FactoryERC721, Ownable {
     address public proxyRegistryAddress;
     address public nftAddress;
     address public lootBoxNftAddress;
-    string public baseURI = "https://Matrioskas-api.opensea.io/api/factory/";
+    string public baseURI = "https://nft-matrioskas-api.herokuapp.com/api/factory/";
 
     /*
-     * Enforce the existence of only 100 OpenSea Matrioskas.
+     * Enforce the existence of only 100 Matrioskas.
      */
-    uint256 Matrioska_SUPPLY = 100;
+    uint256 MATRIOSKA_SUPPLY = 100;
 
     /*
      * Three different options for minting Matrioskas (basic, premium, and gold).
      */
     uint256 NUM_OPTIONS = 3;
-    uint256 SINGLE_Matrioska_OPTION = 0;
-    uint256 MULTIPLE_Matrioska_OPTION = 1;
+    uint256 SINGLE_MATRIOSKA_OPTION = 0;
+    uint256 MULTIPLE_MATRIOSKA_OPTION = 1;
     uint256 LOOTBOX_OPTION = 2;
-    uint256 NUM_MatrioskaS_IN_MULTIPLE_Matrioska_OPTION = 4;
+    uint256 NUM_MATRIOSKAS_IN_MULTIPLE_MATRIOSKA_OPTION = 4;
 
     constructor(address _proxyRegistryAddress, address _nftAddress) {
         proxyRegistryAddress = _proxyRegistryAddress;
@@ -47,11 +47,11 @@ contract MatrioskaFactory is FactoryERC721, Ownable {
     }
 
     function name() override external pure returns (string memory) {
-        return "OpenSeaMatrioska Item Sale";
+        return "Matrioska Item Sale";
     }
 
     function symbol() override external pure returns (string memory) {
-        return "CPF";
+        return "LMF";
     }
 
     function supportsFactoryInterface() override public pure returns (bool) {
@@ -108,21 +108,23 @@ contract MatrioskaFactory is FactoryERC721, Ownable {
             return false;
         }
 
-        Matrioska openSeaMatrioska = Matrioska(nftAddress);
+        Matrioska matrioska = Matrioska(nftAddress);
         uint256 MatrioskaSupply = openSeaMatrioska.totalSupply();
 
         uint256 numItemsAllocated = 0;
         if (_optionId == SINGLE_Matrioska_OPTION) {
             numItemsAllocated = 1;
-        } else if (_optionId == MULTIPLE_Matrioska_OPTION) {
-            numItemsAllocated = NUM_MatrioskaS_IN_MULTIPLE_Matrioska_OPTION;
+        } else if (_optionId == MULTIPLE_MATRIOSKA_OPTION) {
+            numItemsAllocated = NUM_MATRIOSKAS_IN_MULTIPLE_MATRIOSKA_OPTION;
         } else if (_optionId == LOOTBOX_OPTION) {
-            MatrioskaLootBox openSeaMatrioskaLootBox = MatrioskaLootBox(
+            MatrioskaLootBox m
+            
+            atrioskaLootBox = MatrioskaLootBox(
                 lootBoxNftAddress
             );
-            numItemsAllocated = openSeaMatrioskaLootBox.itemsPerLootbox();
+            numItemsAllocated = matrioskaLootBox.itemsPerLootbox();
         }
-        return MatrioskaSupply < (Matrioska_SUPPLY - numItemsAllocated);
+        return MatrioskaSupply < (MATRIOSKA_SUPPLY - numItemsAllocated);
     }
 
     function tokenURI(uint256 _optionId) override external view returns (string memory) {

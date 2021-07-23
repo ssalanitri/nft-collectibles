@@ -3,6 +3,7 @@
 pragma solidity ^0.8.0;
 
 import "openzeppelin-solidity/contracts/utils/math/SafeMath.sol";
+import "@chainlink/contracts/src/v0.6/VRFConsumerBase.sol";
 
 /*
   DESIGN NOTES:
@@ -311,7 +312,7 @@ library LootBoxRandomness {
 
   /**
    * @dev Pseudo-random number generator
-   * NOTE: to improve randomness, generate it with an oracle
+   * TODO: to improve randomness, generate it with an oracle --> Use ChainLink
    */
   function _random(LootBoxRandomnessState storage _state) internal returns (uint256) {
     uint256 randomNumber = uint256(keccak256(abi.encodePacked(blockhash(block.number - 1), msg.sender, _state.seed)));

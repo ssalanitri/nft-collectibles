@@ -7,6 +7,8 @@ env/
 *.DS_Store
 .idea/
 credentials/*
+loadenv.sh
+deploy.sh
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
